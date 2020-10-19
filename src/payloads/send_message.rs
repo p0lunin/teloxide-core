@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    requests::{HasPayload, Payload},
+    requests::HasPayload,
     types::{ChatId, Message, ParseMode, ReplyMarkup},
 };
 
@@ -39,11 +39,7 @@ pub struct SendMessage {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl Payload for SendMessage {
-    type Output = Message;
-
-    const NAME: &'static str = "sendMessage";
-}
+impl_payload! { SendMessage => Message }
 
 impl SendMessage {
     pub fn new<C, T>(chat_id: C, text: T) -> Self

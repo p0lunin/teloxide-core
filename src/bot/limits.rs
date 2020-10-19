@@ -402,12 +402,22 @@ pub struct ThrottlingRequest<R>(R, mpsc::Sender<(Id, Sender<Never>)>);
 
 impl<R: HasPayload> HasPayload for ThrottlingRequest<R> {
     type Payload = R::Payload;
+}
 
-    fn payload_mut(&mut self) -> &mut Self::Payload {
+impl<R> AsMut<R::Payload> for ThrottlingRequest<R>
+where
+    R: HasPayload,
+{
+    fn as_mut(&mut self) -> &mut R::Payload {
         self.0.payload_mut()
     }
+}
 
-    fn payload_ref(&self) -> &Self::Payload {
+impl<R> AsRef<R::Payload> for ThrottlingRequest<R>
+where
+    R: HasPayload,
+{
+    fn as_ref(&self) -> &R::Payload {
         self.0.payload_ref()
     }
 }

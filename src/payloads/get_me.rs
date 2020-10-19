@@ -1,9 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    requests::{HasPayload, Payload},
-    types::User,
-};
+use crate::{requests::HasPayload, types::User};
 
 /// A filter method for testing your bot's auth token. Requires no parameters.
 /// Returns basic information about the bot in form of a [`User`] object.
@@ -18,11 +15,7 @@ impl GetMe {
     }
 }
 
-impl Payload for GetMe {
-    type Output = User;
-
-    const NAME: &'static str = "getMe";
-}
+impl_payload! { GetMe => User }
 
 pub trait GetMeSetters: HasPayload<Payload = GetMe> + Sized {}
 

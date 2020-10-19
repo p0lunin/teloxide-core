@@ -106,3 +106,26 @@ macro_rules! req_future {
 
     };
 }
+
+#[macro_use]
+macro_rules! impl_payload {
+    ($Ty:ty => $Out:ty) => {
+        impl AsRef<Self> for $Ty {
+            fn as_ref(&self) -> &Self {
+                self
+            }
+        }
+
+        impl AsMut<Self> for $Ty {
+            fn as_mut(&mut self) -> &mut Self {
+                self
+            }
+        }
+
+        impl $crate::requests::Payload for $Ty {
+            type Output = $Out;
+
+            const NAME: &'static str = stringify!($Ty);
+        }
+    };
+}
