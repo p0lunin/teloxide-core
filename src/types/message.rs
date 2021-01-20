@@ -13,7 +13,7 @@ use crate::types::{
 ///
 /// [The official docs](https://core.telegram.org/bots/api#message).
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Message {
+pub struct Message<Kind = MessageKind> {
     /// Unique message identifier inside this chat.
     #[serde(rename = "message_id")]
     pub id: i32,
@@ -28,7 +28,7 @@ pub struct Message {
     pub via_bot: Option<User>,
 
     #[serde(flatten)]
-    pub kind: MessageKind,
+    pub kind: Kind,
 }
 
 impl Message {
